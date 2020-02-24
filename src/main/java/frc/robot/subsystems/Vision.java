@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Vision extends SubsystemBase {
@@ -20,7 +21,7 @@ public class Vision extends SubsystemBase {
   private double tx, ty, tv;
 
   public Vision() {
-    m_limelight = NetworkTableInstance.getDefault().getTable("limelight");
+    m_limelight = NetworkTableInstance.getDefault().getTable("limelight-shooter");
   }
 
   @Override
@@ -29,6 +30,10 @@ public class Vision extends SubsystemBase {
     tx = m_limelight.getEntry("tx").getDouble(0);
     ty = m_limelight.getEntry("ty").getDouble(0);
     tv = m_limelight.getEntry("tv").getDouble(0);
+
+    SmartDashboard.putNumber("limelight X", tx);
+    SmartDashboard.putNumber("limelight Y", ty);
+    SmartDashboard.putNumber("Target Found", tv);
   }
 
   public double getTX() {

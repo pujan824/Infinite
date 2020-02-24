@@ -11,10 +11,15 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Utilities.controller;
+import frc.robot.commands.CurvatureDrive;
+import frc.robot.commands.ShootRPM;
+import frc.robot.commands.runIntake;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Vision;
 
@@ -31,10 +36,14 @@ public class RobotContainer {
   private final Climber m_climber = new Climber();
   private final Indexer m_index = new Indexer();
   private final Shooter m_shooter = new Shooter();
+  private final Intake m_intake = new Intake();
 
   // OI interface
   private final Joystick m_driverController = new Joystick(0);
   private final Joystick m_operatorController = new Joystick(1);
+
+  public JoystickButton operatorIntake;
+  public JoystickButton operatorShoot;
 
 
 
@@ -43,6 +52,7 @@ public class RobotContainer {
    */
   public RobotContainer() {
     // Configure the button bindings
+    m_driveTrain.setDefaultCommand(new CurvatureDrive(m_driveTrain, m_driverController));
     configureButtonBindings();
   }
 
@@ -53,6 +63,11 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    operatorIntake = new JoystickButton(m_operatorController, 4);
+    operatorIntake.whenHeld(new runIntake(m_intake, m_operatorController, 0.45));
+    operatorShoot = new JoystickButton(m_operatorController, 2);
+    operatorShoot.whenHeld(new ShootRPM(m_shooter, m_operatorController));
+
   }
 
 

@@ -22,5 +22,29 @@ import edu.wpi.first.wpilibj.util.Units;
 public final class Constants {
     public static final double WHEEl_RADIUS = Units.inchesToMeters(3.0); // Put in meters
     public static final int ENCODER_RESOLUTION = 256;
+    public static final double DT_OPENLOOP_RAMP_RATE = 0.2;
+    public static final int DT_CONTINUOUS_CURRENT = 40;
+
+    //shooter constants CTRE
+    public static final int kSlotIdx = 0;
+
+	/**
+	 * Talon SRX/ Victor SPX will supported multiple (cascaded) PID loops. For
+	 * now we just want the primary one.
+	 */
+	public static final int kPIDLoopIdx = 0;
+
+	/**
+	 * Set to zero to skip waiting for confirmation, set to nonzero to wait and
+	 * report to DS if action fails.
+	 */
+    public static final int kTimeoutMs = 30;
+
+	/**
+	 * PID Gains may have to be adjusted based on the responsiveness of control loop.
+     * kF: 1023 represents output value to Talon at 100%, 7200 represents Velocity units at 100% output
+     * 
+	 * 	                                    			  kP kI kD kF     Iz    PeakOut */
+    public final static Gains kGains_Velocit = new Gains( 0.01, 0, 0, 0.7,  300,  0.85);
 
 }
